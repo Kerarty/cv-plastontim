@@ -15,22 +15,34 @@
     />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/cv-plastontim/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="app">
       <header id="topbar">
         <div class="brand">
-          <div class="brand-dot">⚙</div>
+          <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="16" fill="#12161f" />
+            <path d="M20 21 44 32 20 43" fill="none" stroke="#2c3547" stroke-width="3" />
+            <circle cx="20" cy="21" r="6.5" fill="#ffab42" />
+            <circle cx="44" cy="32" r="6.5" fill="#ff7ab8" />
+            <circle cx="20" cy="43" r="6.5" fill="#43d6f0" />
+          </svg>
           <div>
-            <div class="brand-title">Резюме как workflow · Ярослав Кукар</div>
-            <div class="brand-sub">Пластонтим · автоматизация бизнес-процессов (ИИ-технологии)</div>
+            <div class="brand-title">Резюме как workflow</div>
+            <div class="brand-sub">Ярослав Кукар · Пластонтим · автоматизация (ИИ)</div>
           </div>
         </div>
         <div class="topbar-spacer"></div>
-        <button class="btn btn-primary" id="btn-run">▶ Запустить сценарий</button>
-        <button class="btn" id="btn-reset">⟲ Сброс</button>
-        <button class="btn" id="btn-classic">📄 Классическое резюме</button>
-        <a class="btn" href="https://github.com/Kerarty" target="_blank" rel="noopener">GitHub ↗</a>
+        <button class="btn btn-primary" id="btn-run">Запустить сценарий</button>
+        <button class="btn" id="btn-reset">Сброс</button>
+        <button class="btn" id="btn-classic">Классическое резюме</button>
+        <a class="btn" id="btn-gh" href="https://github.com/Kerarty" target="_blank" rel="noopener">GitHub</a>
       </header>
 
       <div id="stage"></div>
@@ -41,15 +53,21 @@
       <div id="logdock" class="collapsed">
         <div class="log-head">
           <span class="log-dot"></span>
-          <span>лог выполнения сценария</span>
-          <button id="log-toggle" aria-label="свернуть лог">—</button>
+          <span class="log-name">pipeline.log</span>
+          <span class="log-state">idle</span>
+          <button id="log-toggle" aria-label="свернуть лог">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
         </div>
         <div id="log-body"></div>
       </div>
 
       <footer id="statusbar">
-        <span>клик по ноде — карточка · тяни ноды · соединяй порты · двойной клик по связи — удалить</span>
-        <span id="status-chip">● холст готов</span>
+        <span class="sb-hints"><kbd>клик</kbd> нода — карточка<i>·</i><kbd>тяни</kbd> ноды и порты<i>·</i><kbd>2×клик</kbd> связь — удалить</span>
+        <span class="sb-right">
+          <span id="zoom-chip">72%</span>
+          <span id="status-chip">холст готов</span>
+        </span>
       </footer>
 
       <div id="flow" aria-label="резюме для мобильных"></div>

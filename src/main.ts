@@ -15,6 +15,7 @@ import { Simulator } from './ui/simulate';
 import { openCard, closeCard } from './ui/cards';
 import { initPalette } from './ui/palette';
 import { initChrome } from './ui/chrome';
+import { icon } from './ui/icons';
 import './style.css';
 
 // ---------- мир ----------
@@ -28,6 +29,12 @@ const canonEdges = SCENARIO_EDGES;
 
 for (const def of SCENARIO_NODES) world.addNode(def);
 for (const e of SCENARIO_EDGES) world.addEdge(e.from, e.to, e.label);
+
+// хореография появления: ноды въезжают каскадом с задержкой
+let enterIdx = 0;
+for (const r of world.nodes.values()) {
+  r.el.style.animationDelay = `${180 + enterIdx++ * 55}ms`;
+}
 
 // ---------- chrome ----------
 
@@ -91,6 +98,14 @@ const interactions = attachInteractions(world, {
   status: (s) => chrome.status(s),
 });
 
+// начальный зум в статусбаре
+window.dispatchEvent(new CustomEvent('cv-zoom', { detail: Math.round(world.zoom * 100) }));
+
+// dev-параметры превью: ?nointro — без модалки, &autorun — сразу запустить сценарий
+if (location.search.includes('autorun')) {
+  setTimeout(() => (document.getElementById('btn-run') as HTMLElement)?.click(), 900);
+}
+
 // ---------- сброс сцены ----------
 
 window.addEventListener('cv-reset', () => {
@@ -121,7 +136,7 @@ function buildFlow(): void {
     item.className = 'flow-item';
     item.innerHTML = `
       <div class="flow-head">
-        <span class="flow-ico">${def.icon}</span>
+        <span class="flow-chip k-${def.kind}">${icon(def.icon)}</span>
         <span><div class="flow-title">${def.title}</div><div class="flow-sub">${def.sub}</div></span>
       </div>
       <div class="flow-body">
@@ -131,7 +146,7 @@ function buildFlow(): void {
         <ul>${def.mine.map((s) => `<li>${s}</li>`).join('')}</ul>
         ${def.links?.length
           ? `<div class="card-links">${def.links
-              .map((l) => `<a href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`)
+              .map((l) => `<a href="${l.url}" target="_blank" rel="noopener">${icon('external-link')}${l.label}</a>`)
               .join('')}</div>`
           : ''}
       </div>

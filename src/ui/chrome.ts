@@ -1,4 +1,5 @@
 import { PERSON, CLASSIC } from '../data/resume';
+import { icon } from './icons';
 
 export interface ChromeHooks {
   onRun(): void;
@@ -22,6 +23,12 @@ export interface ChromeApi {
 }
 
 export function initChrome(hooks: ChromeHooks): ChromeApi {
+  // иконки в кнопках топбара
+  byId('btn-run').insertAdjacentHTML('afterbegin', icon('play'));
+  byId('btn-reset').insertAdjacentHTML('afterbegin', icon('rotate-ccw'));
+  byId('btn-classic').insertAdjacentHTML('afterbegin', icon('file-text'));
+  byId('btn-gh').insertAdjacentHTML('afterbegin', icon('github'));
+
   // кнопки топбара
   byId('btn-run').addEventListener('click', () => hooks.onRun());
   byId('btn-reset').addEventListener('click', () => {
@@ -32,6 +39,11 @@ export function initChrome(hooks: ChromeHooks): ChromeApi {
   // лог-док: свёртка
   byId('log-toggle').addEventListener('click', () => {
     byId('logdock').classList.toggle('collapsed');
+  });
+
+  // зум-ридaут в статусбаре
+  window.addEventListener('cv-zoom', (e) => {
+    byId('zoom-chip').textContent = `${(e as CustomEvent<number>).detail}%`;
   });
 
   // esc закрывает модалку
@@ -57,7 +69,7 @@ export function initChrome(hooks: ChromeHooks): ChromeApi {
     },
     clearLog() {
       const body = byId('log-body');
-      body.innerHTML = '<div class="empty-hint">— лог пуст; запусти сценарий ▶</div>';
+      body.innerHTML = '<div class="empty-hint">— лог пуст · запусти сценарий</div>';
     },
     openLog() {
       byId('logdock').classList.remove('collapsed');
@@ -71,7 +83,7 @@ export function initChrome(hooks: ChromeHooks): ChromeApi {
     },
     setReady() {
       const chip = byId('status-chip');
-      chip.textContent = '● готов к интервью';
+      chip.textContent = 'готов к интервью';
       chip.classList.remove('flash');
       chip.classList.add('ready');
       openContacts();
@@ -86,7 +98,7 @@ export function initChrome(hooks: ChromeHooks): ChromeApi {
   };
 
   api.clearLog();
-  showIntro(hooks);
+  if (!location.search.includes('nointro')) showIntro(hooks);
   return api;
 }
 
@@ -113,16 +125,23 @@ function modal(inner: string, onOpen?: (card: HTMLElement) => void): void {
 
 function showIntro(hooks: ChromeHooks): void {
   modal(`
-    <h2>Резюме как workflow</h2>
-    <p style="color:var(--dim);margin:2px 0 0">${PERSON.name} · ${PERSON.role} · ${PERSON.city}</p>
-    <div class="modal-hints">
-      <li>Клик по ноде — карточка: что нода делает в сценарии и какой мой опыт за ней стоит.</li>
-      <li>Ноды можно таскать, а порты соединять — редактор живой, как n8n.</li>
-      <li>Кнопка <b>▶ Запустить сценарий</b> прогоняет заказ через конвейер — лог выдаст факты и контакты.</li>
+    <div class="modal-brand">
+      <span class="modal-mark">${icon('workflow')}</span>
+      <div>
+        <div class="modal-eyebrow">${PERSON.name} · ${PERSON.city}</div>
+        <div class="modal-eyebrow-sub">${PERSON.role}</div>
+      </div>
     </div>
-    <p>${PERSON.tagline}</p>
+    <h2>Резюме как workflow</h2>
+    <p class="modal-lead">Этот холст — живой редактор сценария автоматизации заказов Ozon/WB. Слева палитра, справа карточки, внизу лог конвейера.</p>
+    <div class="modal-hints">
+      <div class="hint-row"><span class="hint-num">01</span><span><b>Клик по ноде</b> — карточка: что нода делает в сценарии и какой мой опыт за ней стоит.</span></div>
+      <div class="hint-row"><span class="hint-num">02</span><span><b>Ноды можно тянуть, порты — соединять</b>, двойной клик по связи удаляет её. Редактор живой, как n8n.</span></div>
+      <div class="hint-row"><span class="hint-num">03</span><span><b>Запустить сценарий</b> — пакет пройдёт через конвейер, а лог выдаст ключевые факты и контакты.</span></div>
+    </div>
+    <p class="modal-tagline">${PERSON.tagline}</p>
     <div class="modal-actions">
-      <button class="btn btn-primary" data-run>▶ Запустить сценарий</button>
+      <button class="btn btn-primary" data-run>${icon('play')} Запустить сценарий</button>
       <button class="btn" data-close>Исследовать самому</button>
     </div>
   `, (card) => {
@@ -135,14 +154,15 @@ function showIntro(hooks: ChromeHooks): void {
 
 function openContacts(): void {
   modal(`
+    <div class="modal-eyebrow">сценарий выполнен</div>
     <h2>Контакты</h2>
-    <p>Сценарий выполнен успешно — конвейер готов к работе. Со мной можно связаться здесь:</p>
+    <p class="modal-lead">Конвейер отработал: заказ Ozon/WB дошёл до клиента за 1.2 с. Со мной можно связаться здесь:</p>
     <div class="contact-grid">
-      <a href="mailto:${PERSON.email}"><span class="c-label">EMAIL</span>${PERSON.email}</a>
-      <a href="${PERSON.tg}" target="_blank" rel="noopener"><span class="c-label">TELEGRAM</span>t.me/Kerarty</a>
-      <a href="${PERSON.gh}" target="_blank" rel="noopener"><span class="c-label">GITHUB</span>${PERSON.ghUser} — все проекты из резюме</a>
+      <a href="mailto:${PERSON.email}"><span class="c-ic">${icon('mail')}</span><span class="c-label">EMAIL</span>${PERSON.email}</a>
+      <a href="${PERSON.tg}" target="_blank" rel="noopener"><span class="c-ic">${icon('send')}</span><span class="c-label">TELEGRAM</span>t.me/Kerarty</a>
+      <a href="${PERSON.gh}" target="_blank" rel="noopener"><span class="c-ic">${icon('github')}</span><span class="c-label">GITHUB</span>${PERSON.ghUser} — все проекты из резюме</a>
     </div>
-    <p style="color:var(--dim);font-size:12px">Скрытые ноды в палитре слева разблокированы — там честные ответы про 1С, Linux и Ozon/WB API.</p>
+    <p class="modal-note">Скрытые ноды в палитре слева разблокированы — там честные ответы про 1С, Linux и Ozon/WB API.</p>
     <div class="modal-actions">
       <button class="btn btn-primary" data-close>Закрыть</button>
     </div>
@@ -152,7 +172,7 @@ function openContacts(): void {
 function openClassic(): void {
   const projects = CLASSIC.projects
     .map(
-      (p) => `<div class="proj-item"><a href="${p.url}" target="_blank" rel="noopener">${p.name} ↗</a><p>${p.desc}</p></div>`,
+      (p) => `<div class="proj-item"><a href="${p.url}" target="_blank" rel="noopener">${p.name} ${icon('external-link')}</a><p>${p.desc}</p></div>`,
     )
     .join('');
   const fit = CLASSIC.fit
@@ -162,8 +182,8 @@ function openClassic(): void {
     })
     .join('');
   modal(`
-    <h2>Ярослав Кукар</h2>
-    <p style="color:var(--dim);margin:2px 0 0">${PERSON.role} · Минск · ${PERSON.email}</p>
+    <h2 class="classic-name">Ярослав Кукар</h2>
+    <p class="classic-sub">${PERSON.role} · Минск · ${PERSON.email}</p>
     <h3>О себе</h3>
     <p>${CLASSIC.summary}</p>
     <h3>Навыки</h3>
@@ -175,7 +195,7 @@ function openClassic(): void {
     <h3>Соответствие вакансии</h3>
     <ul>${fit}</ul>
     <div class="modal-actions">
-      <button class="btn btn-primary" id="btn-print">🖨 Печать / PDF</button>
+      <button class="btn btn-primary" id="btn-print">${icon('printer')} Печать / PDF</button>
       <button class="btn" data-close>Закрыть</button>
     </div>
   `, (card) => {

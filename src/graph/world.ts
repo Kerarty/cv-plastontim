@@ -1,4 +1,5 @@
 import type { NodeDef } from '../data/resume';
+import { icon } from '../ui/icons';
 
 export const NODE_W = 232;
 export const HEAD_H = 56;
@@ -37,9 +38,9 @@ export class World {
   private nodesLayer: HTMLElement;
   readonly nodes = new Map<string, RNode>();
   readonly edges = new Map<string, REdge>();
-  panX = 264; // палитра слева (232px) + отступ — ноды не должны уезжать под неё
-  panY = -30;
-  zoom = 0.95;
+  panX = 214; // палитра слева (232px) + отступ — ноды не должны уезжать под неё
+  panY = 26;
+  zoom = 0.72; // стартовый кадр: весь сценарий виден целиком
 
   constructor(root: HTMLElement) {
     this.viewport = el('div', 'viewport');
@@ -49,10 +50,22 @@ export class World {
     this.svgRoot.setAttribute('height', String(WORLD_H));
 
     const defs = svg('defs');
-    const pat = svg('pattern', { id: 'dots', width: '24', height: '24', patternUnits: 'userSpaceOnUse' });
-    pat.appendChild(svg('circle', { cx: '1.5', cy: '1.5', r: '1.2', fill: '#232935' }));
+    // мелкая точечная сетка
+    const pat = svg('pattern', { id: 'dots', width: '22', height: '22', patternUnits: 'userSpaceOnUse' });
+    pat.appendChild(svg('circle', { cx: '1.4', cy: '1.4', r: '1.1', fill: '#1c2230' }));
     defs.appendChild(pat);
+    // крупные перекрестия-метки, как в Figma/Linear
+    const pat2 = svg('pattern', { id: 'cross', width: '110', height: '110', patternUnits: 'userSpaceOnUse' });
+    pat2.appendChild(svg('path', { d: 'M55 48v14M48 55h14', stroke: '#262e3f', 'stroke-width': '1' }));
+    defs.appendChild(pat2);
+    // свечение для бегущего пакета
+    const grad = svg('radialGradient', { id: 'packet-g' });
+    grad.appendChild(svg('stop', { offset: '0', 'stop-color': '#fff6e8' }));
+    grad.appendChild(svg('stop', { offset: '0.4', 'stop-color': '#ffc670' }));
+    grad.appendChild(svg('stop', { offset: '1', 'stop-color': 'rgba(255,150,46,0)' }));
+    defs.appendChild(grad);
     this.svgRoot.appendChild(defs);
+    this.svgRoot.appendChild(svg('rect', { width: String(WORLD_W), height: String(WORLD_H), fill: 'url(#cross)' }));
     this.svgRoot.appendChild(svg('rect', { width: String(WORLD_W), height: String(WORLD_H), fill: 'url(#dots)' }));
 
     this.nodesLayer = el('div', 'nodes-layer');
@@ -72,20 +85,22 @@ export class World {
   }
 
   addNode(def: NodeDef): RNode {
-    const node = el('div', `node k-${def.kind}`);
+    const node = el('div', `node k-${def.kind}${def.added ? ' pop' : ''}`);
     node.dataset.id = def.id;
-    node.style.transform = `translate(${def.x}px, ${def.y}px)`;
+    // позиция через CSS-переменные: позволяет анимировать подъём/появление поверх трансформа
+    node.style.setProperty('--x', `${def.x}px`);
+    node.style.setProperty('--y', `${def.y}px`);
 
     const head = el('div', 'node-head');
-    const ico = el('span', 'node-ico');
-    ico.textContent = def.icon;
+    const chip = el('span', 'node-chip');
+    chip.innerHTML = icon(def.icon);
     const names = el('span', 'node-names');
     const t = el('span', 'node-title');
     t.textContent = def.title;
     const s = el('span', 'node-sub');
     s.textContent = def.sub;
     names.append(t, s);
-    head.append(ico, names);
+    head.append(chip, names);
     node.appendChild(head);
 
     if (def.tags.length) {
@@ -182,7 +197,8 @@ export class World {
     if (!n) return;
     n.def.x = Math.round(x);
     n.def.y = Math.round(y);
-    n.el.style.transform = `translate(${n.def.x}px, ${n.def.y}px)`;
+    n.el.style.setProperty('--x', `${n.def.x}px`);
+    n.el.style.setProperty('--y', `${n.def.y}px`);
     for (const e of this.edges.values()) {
       if (e.from === id || e.to === id) this.updateEdge(e.id);
     }

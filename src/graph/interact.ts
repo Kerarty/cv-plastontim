@@ -162,6 +162,7 @@ export function attachInteractions(world: World, hooks: InteractHooks): Interact
     world.panY = my - (my - world.panY) * (k1 / k0);
     world.zoom = k1;
     world.applyTransform();
+    window.dispatchEvent(new CustomEvent('cv-zoom', { detail: Math.round(k1 * 100) }));
   }, { passive: false });
 
   function deleteSelected(): void {

@@ -63,7 +63,7 @@ export class Simulator {
   private flyPacket(path: SVGPathElement): Promise<void> {
     return new Promise((resolve) => {
       const dot = document.createElementNS(SVG_NS, 'circle') as SVGCircleElement;
-      dot.setAttribute('r', '5');
+      dot.setAttribute('r', '8');
       dot.setAttribute('class', 'packet');
       this.world.svgRoot.appendChild(dot);
       path.classList.add('flowing');
@@ -97,33 +97,38 @@ export class Simulator {
     }
     this.running = true;
     this.world.clearStates();
-    this.hooks.log(this.stamp(), '▶ запуск сценария «заказ Ozon/WB → клиент»', 'finale');
+    this.world.viewport.classList.add('running');
+    this.hooks.log(this.stamp(), 'запуск сценария «заказ Ozon/WB → клиент»', 'finale');
 
-    const waves = this.computeWaves();
-    for (const wave of waves) {
-      const anims: Promise<void>[] = [];
-      for (const id of wave) {
-        for (const e of this.world.edges.values()) {
-          if (e.to === id) anims.push(this.flyPacket(e.path));
+    try {
+      const waves = this.computeWaves();
+      for (const wave of waves) {
+        const anims: Promise<void>[] = [];
+        for (const id of wave) {
+          for (const e of this.world.edges.values()) {
+            if (e.to === id) anims.push(this.flyPacket(e.path));
+          }
         }
+        await Promise.all(anims);
+        for (const id of wave) {
+          const n = this.world.nodes.get(id);
+          if (!n) continue;
+          n.el.classList.add('active');
+          this.hooks.nodeActive(n.def);
+          await sleep(150);
+          n.el.classList.remove('active');
+          n.el.classList.add('done');
+          for (const line of n.def.log) this.hooks.log(this.stamp(), line);
+        }
+        await sleep(240);
       }
-      await Promise.all(anims);
-      for (const id of wave) {
-        const n = this.world.nodes.get(id);
-        if (!n) continue;
-        n.el.classList.add('active');
-        this.hooks.nodeActive(n.def);
-        await sleep(150);
-        n.el.classList.remove('active');
-        n.el.classList.add('done');
-        for (const line of n.def.log) this.hooks.log(this.stamp(), line);
-      }
-      await sleep(240);
-    }
 
-    await sleep(200);
-    for (const line of finale) this.hooks.log(this.stamp(), line, 'finale');
-    this.hooks.done();
-    this.running = false;
+      await sleep(200);
+      for (const line of finale) this.hooks.log(this.stamp(), line, 'finale');
+      this.hooks.done();
+    } finally {
+      this.world.viewport.classList.remove('running');
+      this.running = false;
+    }
   }
 }

@@ -44,7 +44,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'security',
     title: 'Секреты и доступы',
     sub: 'учёт API-ключей · заголовки · ротация',
-    icon: '🔐',
+    icon: 'shield-key',
     tech: [
       'Ключи всех интеграций — один узел: выдача, учёт, ротация.',
       'В запросы уходят HTTP-заголовками (как Key в мониторинге), не в URL.',
@@ -64,7 +64,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'trigger',
     title: 'Новый заказ Ozon',
     sub: 'Ozon Seller API · webhook POST',
-    icon: '🟠',
+    icon: 'zap',
     tech: [
       'POST-вебхук от Seller API: incoming → очередь → обработчики.',
       'Валидация входа и идемпотентность повторных доставок.',
@@ -83,7 +83,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'trigger',
     title: 'Новый заказ Wildberries',
     sub: 'WB API · polling',
-    icon: '🟣',
+    icon: 'refresh-cw',
     tech: [
       'Где нет вебхука — поллер по расписанию с курсором.',
       'Rate-limit: экспоненциальная пауза, батч-запросы.',
@@ -102,7 +102,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'ai',
     title: 'ИИ-агент',
     sub: 'разбор заказа · валидация · ответ',
-    icon: '🤖',
+    icon: 'bot',
     tech: [
       'Агент нормализует заказ: категория, приоритет, детали доставки.',
       'Уверенные случаи — дальше по конвейеру, сомнительные → человеку.',
@@ -122,7 +122,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'process',
     title: 'SQL: остатки и цены',
     sub: 'проверка наличия · транзакция',
-    icon: '🗄️',
+    icon: 'database',
     tech: [
       'Проверка остатка по складу, блокировка позиции, запись статуса.',
       'Транзакция: reservation → commit / rollback.',
@@ -140,7 +140,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'storage',
     title: 'WMS: статусы склада',
     sub: 'резерв · маршрут сборки · синхронизация',
-    icon: '📦',
+    icon: 'box',
     tech: [
       'Заказ попадает в план сборки, статус синхронизируется с Ozon/WB.',
       'Расхождения склада и маркетплейса — источник инцидентов; их ловит узел мониторинга.',
@@ -159,7 +159,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'notify',
     title: 'Telegram-бот',
     sub: 'уведомления · статусы заказа',
-    icon: '✈️',
+    icon: 'send',
     tech: [
       'Bot API: сообщение кладовщику и клиенту, кнопки статусов.',
       'Ответы бота — вебхуком; команды /статус, /адрес.',
@@ -177,7 +177,7 @@ export const SCENARIO_NODES: NodeDef[] = [
     kind: 'monitor',
     title: 'Мониторинг',
     sub: 'датчики · алерты · реагирование',
-    icon: '📈',
+    icon: 'activity',
     tech: [
       'Дерево датчиков по путям: cpu_usage, is_alive, очередь ошибок.',
       'Аномалия → алерт в Telegram-узел → инцидент с дежурным.',
@@ -216,7 +216,7 @@ export const PALETTE_INFO: NodeDef[] = [
     kind: 'info',
     title: 'Конвейер',
     sub: 'как я работаю',
-    icon: '🏭',
+    icon: 'workflow',
     tech: [
       'Метрики конвейера: 20 интерактивных резюме-игр за 6 недель — один проект каждые ~2 дня.',
       'Инструменты: ZCode CLI (GLM), Claude Code; собственный харнес.',
@@ -235,7 +235,7 @@ export const PALETTE_INFO: NodeDef[] = [
     kind: 'info',
     title: 'Скиллы',
     sub: 'стек и инструменты',
-    icon: '🧰',
+    icon: 'sliders',
     tech: [
       'Python — скрипты и REST-клиенты: argparse, TLS, batch.',
       'TypeScript + PixiJS · React 19 + Vite · C# + Unity 6 + URP.',
@@ -254,7 +254,7 @@ export const PALETTE_INFO: NodeDef[] = [
     kind: 'info',
     title: 'Образование',
     sub: 'БГУИР · инженер-программист',
-    icon: '🎓',
+    icon: 'grad-cap',
     tech: [
       'БГУИР, 2023–2027, 4 курс.',
       'Специальность: «Информационные системы и технологии в игровой индустрии».',
@@ -272,7 +272,7 @@ export const PALETTE_INFO: NodeDef[] = [
     kind: 'info',
     title: 'Почему я',
     sub: 'маппинг на вакансию',
-    icon: '🎯',
+    icon: 'target',
     tech: [
       'Вакансия: REST API, вебхуки, интеграции → у меня SDK с адаптерами под 13 сетей и клиент мониторинга.',
       'Вакансия: ИИ-агенты → я стою над собственным агентным конвейером, выпустившим 20 проектов.',
@@ -295,7 +295,7 @@ export const HIDDEN_NODES: NodeDef[] = [
     kind: 'info',
     title: '1С',
     sub: 'честная нода',
-    icon: '💼',
+    icon: 'briefcase',
     hidden: true,
     tech: [
       '1С не трогал — это открыто написано в резюме.',
@@ -313,7 +313,7 @@ export const HIDDEN_NODES: NodeDef[] = [
     kind: 'info',
     title: 'Linux',
     sub: 'честная нода',
-    icon: '🐧',
+    icon: 'terminal',
     hidden: true,
     tech: [
       'Регулярная среда: Git Bash, CI-раннеры GitHub Actions, деплой статики.',
@@ -331,7 +331,7 @@ export const HIDDEN_NODES: NodeDef[] = [
     kind: 'info',
     title: 'Ozon / WB API',
     sub: 'честная нода',
-    icon: '🛒',
+    icon: 'shopping-cart',
     hidden: true,
     tech: [
       'Продакшн-опыта с маркетплейсами нет — есть 13 адаптеров рекламных сетей поверх чужих API.',

@@ -1,4 +1,7 @@
 node_modules/
 dist/
+shots/
+.preview/
+.taste-skill/
 *.local
 .DS_Store

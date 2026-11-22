@@ -1,4 +1,5 @@
 import type { NodeDef } from '../data/resume';
+import { icon } from './icons';
 
 export interface PaletteHooks {
   onAdd(def: NodeDef): void;
@@ -16,8 +17,9 @@ function item(def: NodeDef, cls: string): HTMLElement {
   el.className = `pal-item ${cls}`;
   el.dataset.id = def.id;
   el.innerHTML = `
-    <span class="pal-ico">${def.icon}</span>
-    <span><div class="pal-name">${def.title}</div><div class="pal-sub">${def.sub}</div></span>
+    <span class="pal-chip k-${def.kind}">${icon(def.icon)}</span>
+    <span class="pal-text"><div class="pal-name">${def.title}</div><div class="pal-sub">${def.sub}</div></span>
+    ${cls.includes('locked') ? `<span class="pal-lock">${icon('lock')}</span>` : ''}
   `;
   return el;
 }
@@ -60,7 +62,7 @@ export function initPalette(
   root.appendChild(h3c);
   const lockNote = document.createElement('div');
   lockNote.className = 'pal-note';
-  lockNote.textContent = '🔒 Разблокируются после успешного запуска сценария — честные ответы про пробелы.';
+  lockNote.innerHTML = `${icon('lock', 'note-ic')} Разблокируются после успешного запуска сценария — честные ответы про пробелы.`;
   lockNote.dataset.note = 'locked';
   root.appendChild(lockNote);
   for (const def of defs.hidden) {
@@ -81,9 +83,12 @@ export function initPalette(
       it?.classList.add('used');
     },
     revealHidden(): void {
-      for (const it of root.querySelectorAll('.pal-hidden')) it.classList.remove('locked');
+      for (const it of root.querySelectorAll('.pal-hidden')) {
+        it.classList.remove('locked');
+        it.querySelector('.pal-lock')?.remove();
+      }
       const note = root.querySelector('[data-note="locked"]');
-      if (note) note.textContent = '✓ Разблокированы: клик добавит ноду на холст.';
+      if (note) note.innerHTML = `${icon('check', 'note-ic ok')} Разблокированы — клик добавит ноду на холст.`;
     },
   };
 }
