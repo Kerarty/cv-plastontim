@@ -61,6 +61,15 @@ npm run build    # прод-сборка в dist/ (tsc + vite)
 
 Параметры превью: `?nointro` — без входной модалки, `&autorun` — сразу запустить сценарий.
 
+## PDF-версия
+
+Кнопка **«Скачать PDF»** в топбаре отдаёт классическое двухстраничное резюме A4 с фото:
+[`public/cv-yaroslav-kukar.pdf`](public/cv-yaroslav-kukar.pdf).
+
+- источник — [`print/resume-print.html`](print/resume-print.html) (контент зеркалит `src/data/resume.ts`),
+  регенерация: `msedge --headless=new --print-to-pdf=public/cv-yaroslav-kukar.pdf --no-pdf-header-footer --virtual-time-budget=9000 "file:///<abs>/print/resume-print.html"`;
+- фотка взята из прошлого резюме-проекта (CBT), лежит в [`print/photo.png`](print/photo.png).
+
 ## Данные резюме
 
 Весь контент собран из публичных репозиториев [github.com/Kerarty](https://github.com/Kerarty):

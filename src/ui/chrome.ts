@@ -27,6 +27,7 @@ export function initChrome(hooks: ChromeHooks): ChromeApi {
   byId('btn-run').insertAdjacentHTML('afterbegin', icon('play'));
   byId('btn-reset').insertAdjacentHTML('afterbegin', icon('rotate-ccw'));
   byId('btn-classic').insertAdjacentHTML('afterbegin', icon('file-text'));
+  byId('btn-pdf').insertAdjacentHTML('afterbegin', icon('download'));
   byId('btn-gh').insertAdjacentHTML('afterbegin', icon('github'));
 
   // кнопки топбара
@@ -195,7 +196,8 @@ function openClassic(): void {
     <h3>Соответствие вакансии</h3>
     <ul>${fit}</ul>
     <div class="modal-actions">
-      <button class="btn btn-primary" id="btn-print">${icon('printer')} Печать / PDF</button>
+      <a class="btn btn-primary" href="/cv-plastontim/cv-yaroslav-kukar.pdf" download="cv-yaroslav-kukar.pdf">${icon('download')} Скачать PDF</a>
+      <button class="btn" id="btn-print">${icon('printer')} Печать</button>
       <button class="btn" data-close>Закрыть</button>
     </div>
   `, (card) => {

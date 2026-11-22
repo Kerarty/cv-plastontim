@@ -1182,6 +1182,12 @@ kbd {
 
   .brand-sub { display: none; }
 
+  /* PDF-кнопка сжимается до иконки */
+  @media (max-width: 640px) {
+    .btn-pdf .btn-label { display: none; }
+    .btn-pdf { padding: 0 10px; }
+  }
+
   @media (max-width: 520px) {
     .brand-title { display: none; }
   }

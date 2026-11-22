@@ -1,0 +1,216 @@
+<!doctype html>
+<!-- Источник PDF-версии резюме. Контент зеркалит src/data/resume.ts (PERSON + CLASSIC).
+      Регенерация: msedge --headless --print-to-pdf=public/cv-yaroslav-kukar.pdf --no-pdf-header-footer
+      --virtual-time-budget=8000 "file:///<abs>/print/resume-print.html" -->
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ярослав Кукар — резюме PDF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --ink: #161a22;
+      --dim: #5a6478;
+      --faint: #8a92a5;
+      --line: #e4e7ee;
+      --accent: #d97a1a;
+      --accent-soft: #fdf3e7;
+      --chip: #f2f4f9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body {
+      font-family: 'Onest', 'Segoe UI', sans-serif;
+      color: var(--ink);
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+    .page { width: 210mm; min-height: 297mm; padding: 16mm 17mm 14mm; position: relative; }
+    .page + .page { page-break-before: always; }
+
+    /* ---------- шапка ---------- */
+    .head { display: flex; gap: 12mm; align-items: flex-start; }
+    .head-main { flex: 1; min-width: 0; }
+    h1 {
+      font-family: 'Unbounded', 'Onest', sans-serif;
+      font-weight: 500;
+      font-size: 21pt;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+    }
+    .role { font-size: 12pt; font-weight: 600; color: var(--accent); margin-top: 5mm; }
+    .meta { margin-top: 3mm; color: var(--dim); font-size: 10pt; }
+    .contacts { margin-top: 6mm; display: flex; flex-direction: column; gap: 1.6mm; }
+    .contacts .row { display: flex; align-items: baseline; gap: 4mm; font-size: 10pt; }
+    .contacts .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      letter-spacing: 0.12em;
+      color: var(--faint);
+      width: 24mm;
+      flex: none;
+    }
+    .contacts .v { color: var(--ink); font-weight: 500; }
+    .photo {
+      width: 34mm; height: 34mm;
+      object-fit: cover;
+      border-radius: 3.5mm;
+      flex: none;
+      border: 1px solid var(--line);
+    }
+
+    /* ---------- секции ---------- */
+    h2 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      margin: 7mm 0 3.5mm;
+    }
+    h2::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    p.lead { font-size: 10.5pt; color: var(--ink); }
+    ul { list-style: none; }
+    li { position: relative; padding-left: 5.5mm; margin-bottom: 2mm; color: #2a3040; }
+    li::before {
+      content: '';
+      position: absolute;
+      left: 0.8mm; top: 0.52em;
+      width: 2.6mm; height: 0.5mm;
+      border-radius: 1mm;
+      background: #c2c8d6;
+    }
+    li b { color: var(--ink); }
+    .two-col { display: flex; gap: 10mm; }
+    .two-col > div { flex: 1; min-width: 0; }
+
+    .proj { margin-bottom: 4.5mm; page-break-inside: avoid; }
+    .proj .name { font-weight: 700; font-size: 10.5pt; }
+    .proj .name span { font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; color: var(--faint); font-weight: 400; margin-left: 2.5mm; }
+    .proj .desc { color: #3a4150; font-size: 9.5pt; margin-top: 1mm; line-height: 1.45; }
+
+    .fit li b { color: var(--accent); }
+
+    .foot {
+      margin-top: 8mm;
+      padding-top: 3mm;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      color: var(--faint);
+      letter-spacing: 0.05em;
+    }
+
+    @page { size: A4; margin: 0; }
+    @media print { .page { padding: 16mm 17mm 14mm; } }
+  </style>
+</head>
+<body>
+  <!-- стр. 1 -->
+  <section class="page">
+    <div class="head">
+      <div class="head-main">
+        <h1>Ярослав Кукар</h1>
+        <div class="role">Специалист по автоматизации бизнес-процессов (ИИ-технологии)</div>
+        <div class="meta">Минск · готов к работе · отклик на вакансию «Пластонтим»</div>
+        <div class="contacts">
+          <div class="row"><span class="k">EMAIL</span><span class="v">kukar.yar@gmail.com</span></div>
+          <div class="row"><span class="k">TELEGRAM</span><span class="v">t.me/Kerarty</span></div>
+          <div class="row"><span class="k">GITHUB</span><span class="v">github.com/Kerarty — все проекты из резюме</span></div>
+        </div>
+      </div>
+      <img class="photo" src="photo.png" alt="Фото" />
+    </div>
+
+    <h2>О себе</h2>
+    <p class="lead">
+      Инженер-программист (БГУИР, 4 курс). Автоматизирую всё, что делает руками больше двух раз:
+      собственный харнес ИИ-агентов (49 субагентов, 107 скиллов) произвёл 20 интерактивных проектов
+      за 6 недель. Интеграции — родная среда: SDK с адаптерами под 13 рекламных сетей, REST-клиент
+      системы мониторинга, CI на каждый пуш.
+    </p>
+
+    <h2>Соответствие вакансии</h2>
+    <ul class="fit">
+      <li><b>REST API, вебхуки, интеграции</b> → SDK-адаптеры 13 сетей + клиент мониторинга</li>
+      <li><b>ИИ-агенты, промптинг</b> → собственный харнес, 20 проектов через конвейер</li>
+      <li><b>Мониторинг и реагирование на сбои</b> → QA-скрипт системы датчиков + CI-практика</li>
+      <li><b>Информационная безопасность</b> → ключи в заголовках, TLS, «агент не мёржит сам»</li>
+      <li><b>1С, Ozon/WB API в продакшене</b> → нет, но паттерн адаптеров переносится 1:1; учусь проектами</li>
+    </ul>
+
+    <h2>Навыки</h2>
+    <ul>
+      <li><b>Python</b> — скрипты, REST-клиенты (argparse, TLS, batch)</li>
+      <li><b>TypeScript + PixiJS</b> · React 19 + Vite</li>
+      <li><b>C#</b> · Unity 6 + URP</li>
+      <li><b>Git</b> · GitHub Actions CI · GitHub Pages · Docker (локальный стенд)</li>
+      <li><b>SQL</b> и проектирование БД — база из БГУИР</li>
+      <li><b>ИИ-агенты</b> — харнес 49 субагентов, хуки факт-чека, ZCode CLI (GLM), Claude Code</li>
+    </ul>
+
+    <h2>Образование</h2>
+    <p class="lead">
+      БГУИР, 2023–2027 · 4 курс · «Информационные системы и технологии в игровой индустрии» ·
+      инженер-программист (бакалавриат).
+    </p>
+
+    <div class="foot"><span>Ярослав Кукар · резюме · Минск</span><span>стр. 1/2</span></div>
+  </section>
+
+  <!-- стр. 2: проекты -->
+  <section class="page">
+    <h2>Проекты — github.com/Kerarty</h2>
+    <div class="proj">
+      <div class="name">playble-ads — SDK playable-рекламы <span>TypeScript · CI</span></div>
+      <div class="desc">Монорепо: ядро без зависимостей, адаптеры под 13 рекламных сетей (Meta, Google,
+        AppLovin, TikTok…), валидатор сборки против требований сетей, симулятор контейнера.
+        194 юнит-теста, CI на каждый пуш.</div>
+    </div>
+    <div class="proj">
+      <div class="name">playable-ad-mob-rush — реклама в одном файле <span>HTML 472 КБ</span></div>
+      <div class="desc">Crowd runner: вся игра в одном HTML без внешних запросов. Процедурный арт и
+        синтез звука кодом, MRAID-обвязка, воронка trackEvent, автобаланс босса через симуляцию
+        «идеального прохода».</div>
+    </div>
+    <div class="proj">
+      <div class="name">echoloop-playble — головоломка о времени <span>Unity 6 + URP</span></div>
+      <div class="desc">Петля с эхо прошлых проходов. 8 уровней, 26 EditMode-тестов проходимости,
+        0 бинарных ассетов — геометрия, материалы и звук генерируются кодом.</div>
+    </div>
+    <div class="proj">
+      <div class="name">hsm-qa-scripts — REST-клиент мониторинга <span>Python</span></div>
+      <div class="desc">Отправка телеметрии датчиков в систему иерархического мониторинга: ключ в
+        заголовке, TLS, батч-запросы. Найдено расхождение документации с API (HTTP 500) —
+        задокументировано.</div>
+    </div>
+    <div class="proj">
+      <div class="name">проходная — P2P-игра и агентный конвейер <span>TypeScript + PixiJS</span></div>
+      <div class="desc">WebRTC-дуэли без сервера, процедурная генерация с юнит-тестами, 49 коммитов
+        за 4 дня, предрелиз на Яндекс.Играх / CrazyGames / itch.io. Плюс 20 резюме-игр за 6 недель
+        через собственный агентный конвейер.</div>
+    </div>
+
+    <h2>Почему конвейер — это про эту вакансию</h2>
+    <ul>
+      <li>Харнес из 49 субагентов и 107 скиллов с хуками факт-чека — опыт управления ИИ-агентами как системой, а не как чатом.</li>
+      <li>Правило «агент не мёржит сам» — то же правило для решений по заказам: автоматизация рутины, человек на ревью.</li>
+      <li>Паттерн адаптеров (13 сетей) переносится 1:1 на Ozon/WB Seller API: auth, лимиты, схемы ответов, идемпотентность.</li>
+      <li>Интерактивное резюме, которое вы сейчас читаете, — тоже продукт конвейера: холст-редактор в духе n8n.</li>
+    </ul>
+
+    <div class="foot"><span>kukar.yar@gmail.com · t.me/Kerarty · github.com/Kerarty</span><span>стр. 2/2</span></div>
+  </section>
+</body>
+</html>
