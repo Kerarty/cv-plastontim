@@ -189,5 +189,5 @@ export function attachInteractions(world: World, hooks: InteractHooks): Interact
     if (e.key === 'Escape') clearSel();
   });
 
-  return { deleteSelected, selectNode, clearSelection };
+  return { deleteSelected, selectNode, clearSelection: () => clearSel() };
 }

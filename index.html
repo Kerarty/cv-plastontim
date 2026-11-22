@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Резюме как workflow · Ярослав Кукар — автоматизация бизнес-процессов (ИИ)</title>
+    <meta
+      name="description"
+      content="Интерактивное резюме: сценарий автоматизации заказов Ozon/WB собран из нод, как в n8n. Запусти конвейер — лог выдаст ключевые факты и контакты."
+    />
+    <meta property="og:title" content="Резюме как workflow · Ярослав Кукар" />
+    <meta
+      property="og:description"
+      content="Автоматизация бизнес-процессов (ИИ): вебхуки Ozon/WB, ИИ-агент, SQL, WMS, Telegram-бот, мониторинг. Нажми ▶ — конвейер выдаст резюме."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/cv-plastontim/favicon.svg" />
+  </head>
+  <body>
+    <div id="app">
+      <header id="topbar">
+        <div class="brand">
+          <div class="brand-dot">⚙</div>
+          <div>
+            <div class="brand-title">Резюме как workflow · Ярослав Кукар</div>
+            <div class="brand-sub">Пластонтим · автоматизация бизнес-процессов (ИИ-технологии)</div>
+          </div>
+        </div>
+        <div class="topbar-spacer"></div>
+        <button class="btn btn-primary" id="btn-run">▶ Запустить сценарий</button>
+        <button class="btn" id="btn-reset">⟲ Сброс</button>
+        <button class="btn" id="btn-classic">📄 Классическое резюме</button>
+        <a class="btn" href="https://github.com/Kerarty" target="_blank" rel="noopener">GitHub ↗</a>
+      </header>
+
+      <div id="stage"></div>
+
+      <aside id="palette" aria-label="палитра нод"></aside>
+      <aside id="card" class="hidden" aria-label="карточка ноды"></aside>
+
+      <div id="logdock" class="collapsed">
+        <div class="log-head">
+          <span class="log-dot"></span>
+          <span>лог выполнения сценария</span>
+          <button id="log-toggle" aria-label="свернуть лог">—</button>
+        </div>
+        <div id="log-body"></div>
+      </div>
+
+      <footer id="statusbar">
+        <span>клик по ноде — карточка · тяни ноды · соединяй порты · двойной клик по связи — удалить</span>
+        <span id="status-chip">● холст готов</span>
+      </footer>
+
+      <div id="flow" aria-label="резюме для мобильных"></div>
+    </div>
+
+    <div id="modal-root"></div>
+    <div id="toast" role="status"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
