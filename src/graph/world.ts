@@ -37,8 +37,8 @@ export class World {
   private nodesLayer: HTMLElement;
   readonly nodes = new Map<string, RNode>();
   readonly edges = new Map<string, REdge>();
-  panX = 30;
-  panY = -20;
+  panX = 264; // палитра слева (232px) + отступ — ноды не должны уезжать под неё
+  panY = -30;
   zoom = 0.95;
 
   constructor(root: HTMLElement) {
